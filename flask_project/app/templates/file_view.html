@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+ </br>
+    <h4>Prezentacja statystyk</h4>
+    <p>{{file_to_open.name}} {{file_to_open}}</p>
+</div>
+{% if objects|length > 0 %}
+    <h5>Typ kolumny: "object"</h5>
+    <table class="styled-table" >
+        <thead>
+            <tr>
+                <th>Nazwa kolumny</th>
+                <th>Typ kolumny</th>
+                <th>Liczba wartości unikatowych</th>
+                <th>Liczba pustych wartości</th>
+                <th>Liczba wartości nieliczbowych</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in objects %}
+                <tr class="active-row">
+                    <td>{{ object.column_name }}</td>
+                    <td>{{ object.column_type }}</td>
+                    <td>{{ object.unique_values_count }}</td>
+                    <td>{{ object.null_values_count }}</td>
+                    <td>{{ object.nan_values_count }}</td>     
+                </tr>
+            {% endfor %}
+        </tbody> 
+    </table> 
+{% endif %}  
+ </br>
+{% if numbers|length > 0 %}
+    <h5>Typ kolumny: "int64" lub "float64"</h5>
+    <table class="styled-table" >
+        <thead>
+            <tr>
+                <th>Nazwa kolumny</th>
+                <th>Typ kolumny</th>
+                <th>Minimalna wartość</th>
+                <th>Średnia wartość</th>
+                <th>Maksymalna wartość</th>
+                <th>Mediana</th>
+                <th>Odchylenie standardowe</th>
+                <th>Ścieżka do pliku z histogramem</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for number in numbers %}
+                <tr class="active-row">
+                    <td>{{ number.column_name }}</td>
+                    <td>{{ number.column_type }}</td>
+                    <td>{{ number.min }}</td>
+                    <td>{{ number.avg }}</td>
+                    <td>{{ number.max }}</td>
+                    <td>{{ number.me }}</td>
+                    <td>{{ number.std }}</td>
+                    <td><a href="{{ url_for('plot_view', file_id = file_to_open.id, plotname = number.column_name + '_hist.png') }}">Wyświetl wykres</a></td>  
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %} 
+</br>
+{% if datetimes|length > 0 %}
+<h5>Typ kolumny: "datetime64"</h5>
+    <table class="styled-table" >
+        <thead>
+            <tr>
+                <th>Nazwa kolumny</th>
+                <th>Typ kolumny</th>
+                <th>Pierwsza data</th>
+                <th>Ostatnia data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for datetime in datetimes %} 
+                <tr class="active-row">
+                    <td>{{ datetime.column_name }}</td>
+                    <td>{{ datetime.column_type }}</td>
+                    <td>{{ datetime.first_date }}</td>
+                    <td>{{ datetime.last_date }}</td>     
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}        
+{% endblock content %}

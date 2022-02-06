@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+</br>
+    <h4>Dodawanie plików do bazy danych</h4>
+</br>
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+    Wybierz plik do wysłania
+        <input type="file" name="file">
+        <input type="submit" value="Dodaj" name="submit">
+    </form>
+{% endblock content %}

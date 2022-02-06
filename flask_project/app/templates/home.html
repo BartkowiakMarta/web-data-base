@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+</br>
+    <h4>Witaj na stronie internetowej połączonej z bazą danych!</h4>
+</br>
+    <p>Co chcesz zrobić?</p>
+    <ul>
+        <li>Chcę <a href="{{ url_for('upload') }}">dodać </a>nowy plik do bazy danych.</li>
+        <li>Chcę zobaczyć <a href="{{ url_for('fileset') }}">listę</a> dostępnych plików.</li>
+    </ul>
+{% endblock content %}

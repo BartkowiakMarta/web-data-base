@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% if files_to_list|length > 0 %}
+</br>
+<h4>Dodane pliki:</h4>
+</br>
+<div>
+    <ul>
+        {% for file in files_to_list %}
+            <div>
+                <li><a href="{{ url_for('file_view', file_id=file.id) }}">{{ file.name }}</a>{{ file }}</li>
+                <form action="{{ url_for('delete', file_id=file.id) }}"><button class="btn btn-outline-danger btn-sm">Usuń plik</button></form>
+            </div>
+        {% endfor %}
+    </ul>
+</div>
+
+    {% elif files_to_list|length == 0 %}
+    <h2>Lista plików jest pusta.</h2>
+    <p><a href="{{ url_for('upload') }}">Dodaj plik</a> do bazy danych, aby móc go wyświetlić.</p>
+    {% endif %}
+    
+{% endblock content %}
